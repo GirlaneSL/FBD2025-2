@@ -38,6 +38,7 @@ class DataBase:
             password=settings.DB_PASSWORD,
             port=settings.DB_PORT
         )
+        
 
     def _get_conn(self):
         self.conn = psycopg2.connect(
@@ -48,20 +49,21 @@ class DataBase:
             port="5432"
         )
 
-    def execute(self, sql, many=True):
+
+    def execute(self, sql, params=None, many=True):
         cursor = self.conn.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         result = cursor.fetchall() if many else cursor.fetchone()
         self.conn.close()
         cursor.close()
         return result
+    
 
-    def commit(self, sql):
+    def commit(self, sql, params=None):
         cursor = self.conn.cursor()
-        cursor.execute(sql)
-        self.conn.commit()
+        cursor.execute(sql, params)
         result = cursor.fetchone()
-        self.conn.close()
+        self.conn.commit()
         cursor.close()
+        self.conn.close()
         return result
-

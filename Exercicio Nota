@@ -38,7 +38,7 @@ ESTOQUE(
 3. Endpoints a Implementar
 
 
-_mplemente os seguintes endpoints RESTful:
+Implemente os seguintes endpoints RESTful:
 
  - Para TIPO e FORNECEDOR (caso ainda não existam):
 

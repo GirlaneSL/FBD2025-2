@@ -2,6 +2,8 @@
 -- ============================================
 -- Remover tabelas existentes (se houver)
 -- ============================================
+DROP TABLE IF EXISTS product CASCADE;
+DROP TABLE IF EXISTS inventory CASCADE;
 DROP TABLE IF EXISTS supplier CASCADE;
 DROP TABLE IF EXISTS type_product CASCADE;
 DROP TABLE IF EXISTS company CASCADE;
@@ -35,6 +37,27 @@ CREATE TABLE supplier (
     status VARCHAR(20) NOT NULL CHECK (status IN ('ATIVO', 'INATIVO', 'SUSPENSO')),
     company_id INTEGER NOT NULL,
     CONSTRAINT fk_supplier_company FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE
+);
+
+CREATE TABLE product (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
+    type_product_id INTEGER NOT NULL,
+    CONSTRAINT fk_product_type FOREIGN KEY (type_product_id) REFERENCES type_product(id) ON DELETE CASCADE,
+    supplier_id INTEGER NOT NULL,
+    CONSTRAINT fk_product_supplier FOREIGN KEY (supplier_id) REFERENCES supplier(id) ON DELETE CASCADE,
+    company_id INTEGER NOT NULL,
+    CONSTRAINT fk_product_company FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE
+);
+
+CREATE TABLE inventory (
+    id SERIAL PRIMARY KEY,
+    product_id INTEGER NOT NULL,
+    CONSTRAINT fk_inventory_product FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE,
+    quantity INTEGER NOT NULL,
+    update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ============================================
@@ -89,7 +112,7 @@ INSERT INTO type_product (name, cod, company_id) VALUES
 ('Fone de Ouvido', 'FN-003', 5),
 ('Camiseta', 'CM-001', 6),
 ('Calça Jeans', 'CJ-002', 6),
-('Cimento', 'CM-001', 7),
+('Cimento', 'CT-001', 7),
 ('Tijolo', 'TJ-002', 7),
 ('Tinta', 'TN-003', 7),
 ('Filtro de Óleo', 'FO-001', 8),
