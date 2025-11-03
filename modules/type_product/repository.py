@@ -14,7 +14,12 @@ class TypeProductRepostiroy:
         type_products = db.execute(self.QUERY_TYPE_PRODUCTS)
         results = []
         for type_product in type_products:
-            results.append({'id': type_product[0], 'name': type_product[1], 'cod': type_product[2], 'company_id': type_product[3]})
+            results.append({
+                'id': type_product[0],
+                'name': type_product[1],
+                'cod': type_product[2],
+                'company_id': type_product[3]
+                })
         return results
     
 
@@ -23,7 +28,12 @@ class TypeProductRepostiroy:
         query = self.QUERY_TYPE_PRODUCT_ID % id
         type_product = db.execute(query, many=False)
         if type_product:
-            return {'id': type_product[0], 'name': type_product[1], 'cod': type_product[2], 'company_id': type_product[3]}
+            return {
+                'id': type_product[0],
+                'name': type_product[1],
+                'cod': type_product[2],
+                'company_id': type_product[3]
+                }
         
 
     def save(self, type_product:TypeProductCreate):
@@ -31,7 +41,12 @@ class TypeProductRepostiroy:
         query = self.QUERY_CREATE_TYPE_PRODUCT
         params = (type_product.name, type_product.cod_type, type_product.company_id)
         result = db.commit(query, params)
-        return {'id': result[0], 'name': type_product.name, 'cod': type_product.cod_type, 'company_id': type_product.company_id}
+        return {
+            'id': result[0],
+            'name': type_product.name,
+            'cod': type_product.cod_type,
+            'company_id': type_product.company_id
+            }
     
 
     def get_cod(self, cod:str):
@@ -39,5 +54,10 @@ class TypeProductRepostiroy:
         query = self.QUERY_TYPE_PRODUCTS_COD
         type_product = db.execute(query, params=(cod,), many=False)
         if type_product:
-            return {'id': type_product[0], 'name': type_product[1], 'cod': type_product[2], 'company_id': type_product[3]}
+            return {
+                'id': type_product[0],
+                'name': type_product[1],
+                'cod': type_product[2],
+                'company_id': type_product[3]
+                }
         return None

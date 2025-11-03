@@ -14,7 +14,13 @@ class SupplierRepository:
         suppliers = db.execute(self.QUERY_SUPPLIER)
         results = []
         for supplier in suppliers:
-            results.append({'id': supplier[0], 'name': supplier[1], 'cnpj': supplier[2], 'status': supplier[3], 'company_id': supplier[4]})
+            results.append({
+                'id': supplier[0],
+                'name': supplier[1],
+                'cnpj': supplier[2],
+                'status': supplier[3],
+                'company_id': supplier[4]
+                })
         return results
     
 
@@ -23,7 +29,13 @@ class SupplierRepository:
         query = self.QUERY_SUPPLIER_ID % id
         supplier = db.execute(query, many=False)
         if supplier:
-            return {'id': supplier[0], 'name': supplier[1], 'cnpj': supplier[2], 'status': supplier[3], 'company_id': supplier[4]}
+            return {
+                'id': supplier[0],
+                'name': supplier[1],
+                'cnpj': supplier[2],
+                'status': supplier[3],
+                'company_id': supplier[4]
+                }
 
 
     def save(self, supplier:SupplierCreate):
@@ -31,7 +43,13 @@ class SupplierRepository:
         query = self.QUERY_CREATE_SUPPLIER
         params = (supplier.name, supplier.cnpj, supplier.status, supplier.company_id)
         result = db.commit(query, params)
-        return {'id': result[0], 'name': supplier.name, 'cnpj': supplier.cnpj, 'status': supplier.status, 'company_id': supplier.company_id}
+        return {
+            'id': result[0],
+            'name': supplier.name,
+            'cnpj': supplier.cnpj,
+            'status': supplier.status,
+            'company_id': supplier.company_id
+            }
     
 
     def get_cnpj(self, cnpj: str):
@@ -39,5 +57,12 @@ class SupplierRepository:
         query = self.QUERY_SUPPLIER_CNPJ
         supplier = db.execute(query, params=(cnpj,), many=False)
         if supplier:
-            return {'id': supplier[0], 'name': supplier[1], 'cnpj': supplier[2], 'status': supplier[3], 'company_id': supplier[4]}
+            return {
+                'id': supplier[0],
+                'name': supplier[1],
+                'cnpj': supplier[2],
+                'status': supplier[3],
+                'company_id': supplier[4]
+                }
         return None
+    

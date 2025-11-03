@@ -47,7 +47,7 @@ class ProductService:
             if 'fk_product_supplier' in str(e):
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=f'Forneceor com id {product.supplier_id} não existe!'
+                    detail=f'Fornecedor com id {product.supplier_id} não existe!'
                 )
             if 'fk_product_company' in str(e):
                 raise HTTPException(

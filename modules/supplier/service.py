@@ -36,19 +36,18 @@ class SupplierService:
     def create_supplier(self, supplier:schemas.SupplierCreate):
         repository = SupplierRepository()
 
-        # VALIDAR OS CAMPOS DO CREATE AQUI
-        existing_company = repository.get_cnpj(supplier.cnpj)
+        existing_supplier = repository.get_cnpj(supplier.cnpj)
 
-        if existing_company:
+        if existing_supplier:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f'Já existe uma empresa com o CNPJ {supplier.cnpj} cadastrado!'
+                detail=f'Já existe um fornecedor com o CNPJ {supplier.cnpj} cadastrado!'
             )
         
         if supplier.status not in ['ATIVO', 'INATIVO', 'SUSPENSO']:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail='Status invãlido! Use ATIVO, INATIVO OU SUSPENSO'
+                detail='Status inválido! Use ATIVO, INATIVO OU SUSPENSO'
             )
         
         pattern = r"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$"

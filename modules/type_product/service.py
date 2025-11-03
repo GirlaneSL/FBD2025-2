@@ -14,7 +14,7 @@ class TypeProductService:
         if not type_products:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail='Não há tipo de produtos cadastrados!'
+                detail='Não há tipos de produtos cadastrados!'
             )
 
         return type_products
@@ -41,7 +41,7 @@ class TypeProductService:
         if existing_type_product:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f'Já existe um tipo com o código {type_product.cod_type} cadastrado!'
+                detail=f'Já existe um tipo de produto com o código {type_product.cod_type} cadastrado!'
             )
         
         pattern = r'^[A-Z]{2}-\d{3}$'

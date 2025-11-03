@@ -14,7 +14,7 @@ class CompanyService:
         if not companies:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail='Não há produtos cadastrados!'
+                detail='Não há empresas cadastradas!'
             )
 
         return companies
@@ -35,7 +35,7 @@ class CompanyService:
         if company.status not in ['ATIVO', 'INATIVO', 'SUSPENSO']:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail='Status invãlido! Use ATIVO, INATIVO OU SUSPENSO'
+                detail='Status inválido! Use ATIVO, INATIVO OU SUSPENSO'
             )
         
         pattern = r"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$"
