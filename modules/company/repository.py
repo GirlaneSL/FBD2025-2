@@ -34,7 +34,6 @@ class CompanyRepository:
         if company:
             return {"id": company[0], "name": company[1]}
         
-    
 
     def get_cnpj(self, cnpj: str):
         db = DataBase()

@@ -113,7 +113,7 @@ class ProductRepository:
             }
 
 
-    def get_company_products(self, company_id: int):
+    def get_company_id(self, company_id: int):
         db = DataBase()
         query = self.QUERY_PRODUCTS_SUPPLIER_AND_TYPE % company_id
         products = db.execute(query)

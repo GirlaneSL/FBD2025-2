@@ -26,6 +26,6 @@ def add_product(product:schemas.ProductCreate):
 
 
 @router.get('/empresa/{company_id}/produtos', response_model=list[schemas.ProductResponse])
-def get_products_by_supplier_and_type(company_id:int):
+def get_products_by_company_id(company_id:int):
     service = ProductService()
-    return service.get_products_supplier_type(company_id)
+    return service.get_products_company_id(company_id)

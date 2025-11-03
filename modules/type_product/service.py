@@ -9,12 +9,28 @@ from modules.type_product import schemas
 class TypeProductService:
     def get_type_products(self):
         repository = TypeProductRepostiroy()
-        return repository.get_all()
+        type_products = repository.get_all()
+
+        if not type_products:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='Não há tipo de produtos cadastrados!'
+            )
+
+        return type_products
 
 
     def get_type_product_id(self, id:int):
         repository = TypeProductRepostiroy()
-        return repository.get_id(id)
+        type_product = repository.get_id(id)
+
+        if not type_product:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f'Tipo de produto com id {id} não existe!'
+            )
+
+        return type_product
     
     
     def create_type_product(self, type_product:schemas.TypeProductCreate):

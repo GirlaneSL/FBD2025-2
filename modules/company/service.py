@@ -9,7 +9,15 @@ from fastapi import HTTPException, status
 class CompanyService:
     def get_companies(self):
         repository = CompanyRepository()
-        return repository.get_all()
+        companies = repository.get_all()
+
+        if not companies:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='Não há produtos cadastrados!'
+            )
+
+        return companies
 
 
     def create_company(self, company: schemas.CompanyCreate):
@@ -47,7 +55,7 @@ class CompanyService:
         if not company:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail='Empresa não existe!'
+                detail=f'Empresa com id {id} não existe!'
             )
 
         return company

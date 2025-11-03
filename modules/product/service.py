@@ -1,3 +1,4 @@
+from itertools import product
 from fastapi import HTTPException, status
 from psycopg2 import IntegrityError
 
@@ -8,12 +9,28 @@ from modules.product.schemas import ProductCreate
 class ProductService:
     def get_products(self):
         repository = ProductRepository()
-        return repository.get_all()
+        products = repository.get_all()
+
+        if not products:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='Não há produtos cadastrados!'
+            )
+
+        return products
     
 
     def get_product_id(self, id:int):
         repository = ProductRepository()
-        return repository.get_id(id)
+        product = repository.get_id(id)
+
+        if not product:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f'Produto com id {id} não existe!'
+            )
+
+        return product
 
 
     def create_product(self, product:ProductCreate):
@@ -39,7 +56,15 @@ class ProductService:
                 )
     
 
-    def get_products_supplier_type(self, company_id:int):
+    def get_products_company_id(self, company_id:int):
         repository = ProductRepository()
-        return repository.get_company_products(company_id)
+        company_products = repository.get_company_id(company_id)
+
+        if not company_products:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f'Não há produtos da empresa com id {company_id}!'
+            )
+
+        return company_products
         

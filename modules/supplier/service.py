@@ -9,12 +9,28 @@ from modules.supplier import schemas
 class SupplierService:
     def get_suppliers(self):
         repository = SupplierRepository()
-        return repository.get_all()
+        suppliers = repository.get_all()
+
+        if not suppliers:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='Não há fornecedores cadastrados!'
+            )
+
+        return suppliers
 
 
     def get_supplier_id(self, id:int):
         repository = SupplierRepository()
-        return repository.get_id(id)
+        supplier = repository.get_id(id)
+
+        if not supplier:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f'Fornecedor com id {id} não existe!'
+            )
+
+        return supplier
 
 
     def create_supplier(self, supplier:schemas.SupplierCreate):
